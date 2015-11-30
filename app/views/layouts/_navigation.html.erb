@@ -16,7 +16,7 @@
  -->
  
  <header>
-   <nav class="navbar navbar-inverse navbar-fixed-top">
+   <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -29,8 +29,34 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to "link 1", "" %></li>
-            <li><%= link_to "link 1", "" %></li>
+            <li class="dropdown">
+              <%= link_to '#', class: "dropdown-toggle", "data-toggle" => "dropdown" do %>
+                Styles <b class="caret"></b>
+              <% end %>
+              <ul class='dropdown-menu'>
+                <% Style.all.each do |style| %>
+                  <li><%= link_to style.name, style_path(style) %></li>
+                <% end %>
+                <% if logged_in? %>
+                  <li class='divider'></li>
+                  <li><%= link_to(new_style_path) do %>New Style<% end %></li>
+                <% end %>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <%= link_to '#', class: "dropdown-toggle", "data-toggle" => "dropdown" do %>
+                Ingredients <b class="caret"></b>
+              <% end %>
+              <ul class='dropdown-menu'>
+                <% Ingredient.all.each do |ingredient| %>
+                  <li><%= link_to ingredient.name, ingredient_path(ingredient) %></li>
+                <% end %>
+                <% if logged_in? %>
+                  <li class='divider'></li>
+                  <li><%= link_to(new_ingredient_path) do %>New Ingredient<% end %></li>
+                <% end %>
+              </ul>
+            </li>
             <% if logged_in? %>
               <li><%= link_to "New Recipe", new_recipe_path %></li>
               <li class="dropdown">
